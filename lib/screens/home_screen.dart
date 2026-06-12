@@ -20,34 +20,40 @@ class HomeScreen extends StatelessWidget {
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: ListView.builder(
-          itemCount: PatientData.patients.length,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: PatientData.patients.isEmpty
+              ? const Center(
+            child: Text(
+              "No Patient Present",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey,
+              ),
+            ),
+          )
+              : ListView.builder(
+            itemCount: PatientData.patients.length,
+            itemBuilder: (context, index) {
+              final patient = PatientData.patients[index];
 
-          itemBuilder: (context, index) {
-
-            final patient =
-            PatientData.patients[index];
-
-            return PatientCard(
-              patient: patient,
-
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        PatientDetailsScreen(
-                          patient: patient,
-                        ),
-                  ),
-                );
-              },
-            );
-          },
+              return PatientCard(
+                patient: patient,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => PatientDetailsScreen(
+                        patient: patient,
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
-      ),
     );
   }
 }
